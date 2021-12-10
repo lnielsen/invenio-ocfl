@@ -9,6 +9,7 @@
 """OCFL module for InvenioRDM."""
 
 from . import config
+from .services import OCFLService, OCFLServiceConfig
 
 
 class InvenioOCFL(object):
@@ -22,7 +23,17 @@ class InvenioOCFL(object):
     def init_app(self, app):
         """Flask application initialization."""
         self.init_config(app)
+        self.init_services(app)
         app.extensions['invenio-ocfl'] = self
+
+    def init_services(self, app):
+        """Initialize service."""
+        self.service = OCFLService(config=OCFLServiceConfig(
+            records=app.config['OCFL_RECORDS'],
+            roots=app.config['OCFL_ROOTS'],
+            storages=app.config['OCFL_STORAGES'],
+            repositories=app.config['OCFL_REPOSITORIES'],
+        ))
 
     def init_config(self, app):
         """Initialize configuration."""

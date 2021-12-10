@@ -57,6 +57,7 @@ for name, reqs in extras_require.items():
     extras_require['all'].extend(reqs)
 
 install_requires = [
+    'ocflcore>=0.1.0'
 ]
 
 packages = find_packages()
@@ -83,6 +84,9 @@ setup(
     include_package_data=True,
     platforms='any',
     entry_points={
+        'flask.commands': [
+            'ocfl = invenio_ocfl.cli:cli',
+        ],
         'invenio_base.api_apps': [
             'invenio_ocfl = invenio_ocfl:InvenioOCFL',
         ],
